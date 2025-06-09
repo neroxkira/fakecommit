@@ -1,4 +1,4 @@
-name: Fake 20 Commits to All Repos
+name: Fake 50 Commits to All Repos
 
 on:
   schedule:
@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Setup Git
         run: |
-          git config --global user.name "neroxbot"
-          git config --global user.email "bot@nerox.com"
+          git config --global user.name "neroxmira"
+          git config --global user.email "junsganz@gmail.com"
 
       - name: Get All Public Repos & Commit
         run: |
