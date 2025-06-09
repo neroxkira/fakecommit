@@ -1,0 +1,36 @@
+name: Fake Commit to Multiple Repos
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git
+        run: |
+          git config --global user.name "neroxbot"
+          git config --global user.email "bot@nerox.com"
+
+      - name: Commit to multiple repos
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          repos=("neroxkira/fake-repo1" "neroxkira/fake-repo2" "neroxkira/fake-repo3")
+
+          for repo in "${repos[@]}"
+          do
+            echo ">>> Cloning $repo..."
+            git clone https://x-access-token:$TOKEN@github.com/$repo.git
+            cd $(basename "$repo")
+
+            echo "$(date)" >> log.txt
+            git add log.txt
+            git commit -m "bot: fake commit"
+            git push
+
+            cd ..
+            rm -rf $(basename "$repo")
+          done
