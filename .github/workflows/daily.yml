@@ -27,7 +27,7 @@ jobs:
             cd $(basename "$repo")
 
             # Commit 20x
-            for i in {1..20}; do
+            for i in $(seq 1 $((RANDOM % 51 + 50))); do
               echo "$(date) - commit $i" >> log.txt
               git add log.txt
               git commit -m "bot: fake commit $i"
